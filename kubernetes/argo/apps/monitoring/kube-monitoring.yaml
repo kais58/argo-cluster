@@ -33,64 +33,8 @@ spec:
           values: |-
             prometheus:
               enabled: true
-              prometheusSpec:
-                tolerations:
-                  - key: dedicated
-                    operator: Equal
-                    value: system
-                    effect: NoSchedule
-                affinity:
-                  nodeAffinity:
-                    requiredDuringSchedulingIgnoredDuringExecution:
-                      nodeSelectorTerms:
-                        - matchExpressions:
-                          - key: node.kubernetes.io/role
-                            operator: In
-                            values: [system]
-            prometheusOperator:
-              tolerations:
-                - key: dedicated
-                  operator: Equal
-                  value: system
-                  effect: NoSchedule
-              affinity:
-                nodeAffinity:
-                  requiredDuringSchedulingIgnoredDuringExecution:
-                    nodeSelectorTerms:
-                      - matchExpressions:
-                        - key: node.kubernetes.io/role
-                          operator: In
-                          values: [system]
-              admissionWebhooks:
-                patch:
-                  tolerations:
-                    - key: dedicated
-                      operator: Equal
-                      value: system
-                      effect: NoSchedule
-                  affinity:
-                    nodeAffinity:
-                      requiredDuringSchedulingIgnoredDuringExecution:
-                        nodeSelectorTerms:
-                          - matchExpressions:
-                            - key: node.kubernetes.io/role
-                              operator: In
-                              values: [system]
             grafana:
               enabled: true
-              tolerations:
-                - key: dedicated
-                  operator: Equal
-                  value: system
-                  effect: NoSchedule
-              affinity:
-                nodeAffinity:
-                  requiredDuringSchedulingIgnoredDuringExecution:
-                    nodeSelectorTerms:
-                      - matchExpressions:
-                        - key: node.kubernetes.io/role
-                          operator: In
-                          values: [system]
               additionalDataSources:
                 - name: Loki
                   type: loki
@@ -103,31 +47,3 @@ spec:
 
             alertmanager:
               enabled: true
-              alertmanagerSpec:
-                tolerations:
-                  - key: dedicated
-                    operator: Equal
-                    value: system
-                    effect: NoSchedule
-                affinity:
-                  nodeAffinity:
-                    requiredDuringSchedulingIgnoredDuringExecution:
-                      nodeSelectorTerms:
-                        - matchExpressions:
-                          - key: node.kubernetes.io/role
-                            operator: In
-                            values: [system]
-            kube-state-metrics:
-              tolerations:
-                - key: dedicated
-                  operator: Equal
-                  value: system
-                  effect: NoSchedule
-              affinity:
-                nodeAffinity:
-                  requiredDuringSchedulingIgnoredDuringExecution:
-                    nodeSelectorTerms:
-                      - matchExpressions:
-                        - key: node.kubernetes.io/role
-                          operator: In
-                          values: [system]
