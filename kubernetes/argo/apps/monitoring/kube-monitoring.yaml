@@ -41,7 +41,7 @@ spec:
                   access: proxy
                   url: http://loki-gateway
               ingress:
-                enabled: true
+                enabled: false
                 hosts:
                   - grafana.{{ environment }}.kais58.com
 
