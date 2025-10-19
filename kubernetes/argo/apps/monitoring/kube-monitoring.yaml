@@ -30,20 +30,5 @@ spec:
         chart: kube-prometheus-stack
         targetRevision: 78.3.2
         helm:
-          values: |-
-            prometheus:
-              enabled: true
-            grafana:
-              enabled: true
-              additionalDataSources:
-                - name: Loki
-                  type: loki
-                  access: proxy
-                  url: http://loki-gateway
-              ingress:
-                enabled: false
-                hosts:
-                  - grafana.{{ environment }}.kais58.com
-
-            alertmanager:
-              enabled: true
+          valueFiles:
+            - $repo/kubernetes/apps/monitoring/kube-monitoring/values.yaml
