@@ -26,24 +26,28 @@ spec:
         name: '{{ cluster }}'
         namespace: monitoring
       source:
-        repoURL: https://prometheus-community.github.io/helm-charts
-        chart: kube-prometheus-stack
-        targetRevision: 78.3.2
-        helm:
-          values: |-
-            prometheus:
-              enabled: true
-            grafana:
-              enabled: true
-              additionalDataSources:
-                - name: Loki
-                  type: loki
-                  access: proxy
-                  url: http://loki-gateway
-              ingress:
-                enabled: false
-                hosts:
-                  - grafana.{{ environment }}.kais58.com
+        - repoURL: "https://github.com/kais58/argo-cluster.git"
+          path: kubernetes/apps/cert-manager/cert-manager
+          targetRevision: main
+          ref: repo
+        - repoURL: https://prometheus-community.github.io/helm-charts
+          chart: kube-prometheus-stack
+          targetRevision: 78.3.2
+          helm:
+            values: |-
+              prometheus:
+                enabled: true
+              grafana:
+                enabled: true
+                additionalDataSources:
+                  - name: Loki
+                    type: loki
+                    access: proxy
+                    url: http://loki-gateway
+                ingress:
+                  enabled: false
+                  hosts:
+                    - grafana.{{ environment }}.kais58.com
 
-            alertmanager:
-              enabled: true
+              alertmanager:
+                enabled: true
