@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://github.com/datreeio/CRDs-catalog/raw/refs/heads/main/gateway.networking.k8s.io/gateway_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: internal
+  annotations:
+    external-dns.alpha.kubernetes.io/target: internal.kais58.com
+spec:
+  gatewayClassName: cilium
+  addresses:
+    - type: IPAddress
+      value: 129.168.1.36
+  infrastructure:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: internal.kais58.com
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+      hostname: '*.kais58.com'
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: https
+      protocol: HTTPS
+      port: 443
+      hostname: '*.kais58.com'
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: kais58-com-production-tls
+sops:
+  age:
+    - recipient: age19934actyek8t7xh4y2nlx4wjtgq0a5d4zszytgd3f58a83ts7ytqasyc63
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpc3NMVklSMlVER3NoNlFn
+        QlFoK0Z0NUV5eW5SUlkwbzd0ZmtvWGZGcmw4Ck4waDVRRW1UVUt1SlZpazcxOEVR
+        aE5Oek1DemlIT0l4YTNBbjVRT2p1cGMKLS0tIDVsM0NaUzEzQUtveUtpdWFIQWg5
+        ZThDeFZ0eFdsMFlQUEVnMmRZbVRCTkUKWWGfBIxsqcSxlEUiaMe2FSNkKaYASNTw
+        olMgs13VdTEQowNpicI0072xxY5qyvUw3RCwNDbcwbZuzLOyTfIurA==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-10-19T01:01:10Z"
+  mac: ENC[AES256_GCM,data:5PM429wx894ZExMmzZaUERNcAwPruz3D14W+cIOb947ZyGpflAmWLWQ4ZPweC04ry5ASdJB6TkxQouI8ds7gSVxK5XMw0rv++YMBoxCEvuDoWtDrVUcVsXYGZhc9dUoJNvgznIAC5EACCz+3ceGk4EqoYKFrNopVAWyU+6pjEuQ=,iv:02IVUJEydO0BXSMRtZLn8Jo6nBfiTU/pptzkiCVUGvQ=,tag:qC7eNzWw4w5JqcY1ZO6xbA==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.11.0

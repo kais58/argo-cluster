@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kais58-com-production
+spec:
+  secretName: kais58-com-production-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: kais58.com
+  dnsNames:
+    - kais58.com
+    - '*.kais58.com'
+sops:
+  age:
+    - recipient: age19934actyek8t7xh4y2nlx4wjtgq0a5d4zszytgd3f58a83ts7ytqasyc63
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBqQytvcURTdXl2eUV2RUpT
+        WFY1NFN5YXpjaTBFSlFRVnAzcURCWDNtdFJjCkkyMmFRMjlOaG05NTJHTndPU040
+        aW1YUTczYmIyUEdXWjMxRld0T1RBbFUKLS0tICtlNjJ1a0dqK1JLZGFzWms4RTlV
+        bmkva1VmQU5lUmZ3ek1Ra0dkZ25NU2sKWpQoKoS4QjATMKXGnm13wPz6KTcvtQbK
+        VZlVa6+nRLvwiBd9nMZ8UxPuw18Vp6EDkT9h97GeDNWv0MlJumz/uw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-10-19T01:01:10Z"
+  mac: ENC[AES256_GCM,data:qQ+MAmVYJW93CKFaBth3HZ+MzXaoJBqGpVmjuD5gTWoXowxbLlq7zNwOCRkqOISmjwSRgylPl0m3Zt6tTQu+AARYV/hqRHQLBsujyzJ4MonlY7n5r4ORAzxpTvxqHMD80qGObUdAOPm9fmu+CthKt8e3QD+xaC8VN7JhCy+51Bo=,iv:oAPeq6DbIPqa1cdvvPsxHZZYiPz6Uar5I9qYUkn7hBQ=,tag:Eq0PY8BiOJJM1TgQNHDYTw==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.11.0

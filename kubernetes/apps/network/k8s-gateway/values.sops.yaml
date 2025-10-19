@@ -1,0 +1,28 @@
+fullnameOverride: k8s-gateway
+domain: kais58.com
+ttl: 1
+service:
+  type: LoadBalancer
+  port: 53
+  annotations:
+    io.cilium/lb-ipam-ips: 192.168.1.35
+  externalTrafficPolicy: Cluster
+watchedResources:
+  - HTTPRoute
+  - Service
+sops:
+  age:
+    - recipient: age19934actyek8t7xh4y2nlx4wjtgq0a5d4zszytgd3f58a83ts7ytqasyc63
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5RUlORTUwVjMvMy9UUElR
+        WmJTbm5Cb3c4V3ZsZ1BIN21hT0ZwVjRPU3h3CmttenFnRlY3ZFJBQjZ5SnZuMUtZ
+        OHQ3UEJsU2d6SWplNHpXem9SRWVtb0EKLS0tIFhRRkJjUkxIaVphSktzKzZjZDU3
+        QSsyTjM1amdpcFNndzJoSzFiYkNNRE0K5ILQR5g9I3wM7KHQwHDq03PhkewqybCr
+        NhznubcyCU7oF0sBwSwHOD3hlw5OQgEzB0T84DeE8Rok7vJglBjVrQ==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-10-19T01:01:10Z"
+  mac: ENC[AES256_GCM,data:qtS7DEKIxJBmLa5kqSK80cjfr3gYnlMqoR5JVdSMNP7yY+zpWPqHhJoFwdv6UsUP7jGHEzDzb3vrbQ+aGM8s7WhN8ORTHwPEE+DAwUK2jVb9RY9ymKaXsKfTUOhhBa66DgsulNM0tXE4F2K9kuQQkmNXK4IJX0jTav0CCsgWPRs=,iv:bNbHviDIpyIto/NaS1OpQResMO1EVrwp763i2bmwy48=,tag:DKMkGqCKPSXSSZmFLscBhg==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.11.0
