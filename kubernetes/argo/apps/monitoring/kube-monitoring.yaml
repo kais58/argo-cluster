@@ -30,5 +30,6 @@ spec:
         chart: kube-prometheus-stack
         targetRevision: 78.3.2
         helm:
+          releaseName: kube-monitoring
           valueFiles:
             - $repo/kubernetes/apps/monitoring/kube-monitoring/values.yaml
