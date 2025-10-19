@@ -1,0 +1,133 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kube-prometheus-stack
+  namespace: argo-system
+  finalizers: [resources-finalizer.argocd.argoproj.io]
+spec:
+  generators:
+    - list:
+        elements:
+          - environment: mgmt
+            cluster: in-cluster
+  template:
+    metadata:
+      name: '{{ environment }}-kube-prometheus-stack'
+      finalizers: [resources-finalizer.argocd.argoproj.io]
+    spec:
+      project: infra
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ServerSideApply=true
+      destination:
+        name: '{{ cluster }}'
+        namespace: monitoring
+      source:
+        repoURL: https://prometheus-community.github.io/helm-charts
+        chart: kube-prometheus-stack
+        targetRevision: 78.3.2
+        helm:
+          values: |-
+            prometheus:
+              enabled: true
+              prometheusSpec:
+                tolerations:
+                  - key: dedicated
+                    operator: Equal
+                    value: system
+                    effect: NoSchedule
+                affinity:
+                  nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                      nodeSelectorTerms:
+                        - matchExpressions:
+                          - key: node.kubernetes.io/role
+                            operator: In
+                            values: [system]
+            prometheusOperator:
+              tolerations:
+                - key: dedicated
+                  operator: Equal
+                  value: system
+                  effect: NoSchedule
+              affinity:
+                nodeAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    nodeSelectorTerms:
+                      - matchExpressions:
+                        - key: node.kubernetes.io/role
+                          operator: In
+                          values: [system]
+              admissionWebhooks:
+                patch:
+                  tolerations:
+                    - key: dedicated
+                      operator: Equal
+                      value: system
+                      effect: NoSchedule
+                  affinity:
+                    nodeAffinity:
+                      requiredDuringSchedulingIgnoredDuringExecution:
+                        nodeSelectorTerms:
+                          - matchExpressions:
+                            - key: node.kubernetes.io/role
+                              operator: In
+                              values: [system]
+            grafana:
+              enabled: true
+              tolerations:
+                - key: dedicated
+                  operator: Equal
+                  value: system
+                  effect: NoSchedule
+              affinity:
+                nodeAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    nodeSelectorTerms:
+                      - matchExpressions:
+                        - key: node.kubernetes.io/role
+                          operator: In
+                          values: [system]
+              additionalDataSources:
+                - name: Loki
+                  type: loki
+                  access: proxy
+                  url: http://loki-gateway
+              ingress:
+                enabled: true
+                hosts:
+                  - grafana.{{ environment }}.kais58.com
+
+            alertmanager:
+              enabled: true
+              alertmanagerSpec:
+                tolerations:
+                  - key: dedicated
+                    operator: Equal
+                    value: system
+                    effect: NoSchedule
+                affinity:
+                  nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                      nodeSelectorTerms:
+                        - matchExpressions:
+                          - key: node.kubernetes.io/role
+                            operator: In
+                            values: [system]
+            kube-state-metrics:
+              tolerations:
+                - key: dedicated
+                  operator: Equal
+                  value: system
+                  effect: NoSchedule
+              affinity:
+                nodeAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    nodeSelectorTerms:
+                      - matchExpressions:
+                        - key: node.kubernetes.io/role
+                          operator: In
+                          values: [system]
