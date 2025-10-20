@@ -2,7 +2,7 @@
 prometheus:
   enabled: true
 grafana:
-  enabled: true
+  enabled: false
   additionalDataSources:
     - name: Loki
       type: loki
