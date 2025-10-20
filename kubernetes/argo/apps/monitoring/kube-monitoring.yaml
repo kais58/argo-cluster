@@ -1,63 +1,67 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
   name: kube-prometheus-stack
   namespace: argo-system
   finalizers: [resources-finalizer.argocd.argoproj.io]
+  annotations:
+    argocd.argoproj.io/sync-wave: '0'
 spec:
-  generators:
-    - list:
-        elements:
-          - environment: mgmt
-            cluster: in-cluster
-  template:
-    metadata:
-      name: '{{ environment }}-kube-prometheus-stack'
-      finalizers: [resources-finalizer.argocd.argoproj.io]
-    spec:
-      project: infra
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - ServerSideApply=true
-      destination:
-        name: '{{ cluster }}'
-        namespace: monitoring
-      source:
+  project: infra
+  destination:
+    name: in-cluster
+    namespace: network
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 1
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 3m
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true
+      - PruneLast=true
+      - RespectIgnoreDifferences=true
 
-        repoURL: https://prometheus-community.github.io/helm-charts
-        chart: kube-prometheus-stack
-        targetRevision: 78.3.2
-        helm:
-          values: |-
-            prometheus:
-              enabled: true
-            grafana:
-              enabled: true
-              additionalDataSources:
-                - name: Loki
-                  type: loki
-                  access: proxy
-                  url: http://loki-gateway
-              ingress:
-                enabled: false
-                hosts:
-                  - grafana.{{ environment }}.kais58.com
+  source:
 
-            alertmanager:
-              enabled: true
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 78.3.2
+    helm:
+      values: |-
+        prometheus:
+          enabled: true
+        grafana:
+          enabled: true
+          additionalDataSources:
+            - name: Loki
+              type: loki
+              access: proxy
+              url: http://loki-gateway
+          ingress:
+            enabled: false
+            hosts:
+              - grafana.{{ environment }}.kais58.com
 
-            route:
-              app:
-                hostnames:
-                  - grafana.kais58.com
-                parentRefs:
-                  - name: external
-                    namespace: kube-system
-                    sectionName: https
-                rules:
-                  - backendRefs:
-                      - identifier: grafana
-                        port: 8080
+        alertmanager:
+          enabled: true
+
+        route:
+          app:
+            hostnames:
+              - grafana.kais58.com
+            parentRefs:
+              - name: external
+                namespace: kube-system
+                sectionName: https
+            rules:
+              - backendRefs:
+                  - identifier: grafana
+                    port: 8080
