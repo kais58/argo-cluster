@@ -5,7 +5,7 @@ metadata:
 spec:
   parentRefs:
     - name: external
-      namespace: monitoring
+      namespace: kube-system
   hostnames: ["grafana.kais58.com"]
   rules:
     - backendRefs:
