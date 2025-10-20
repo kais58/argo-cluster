@@ -3,9 +3,6 @@ prometheus:
   enabled: true
 grafana:
   enabled: true
-  service:
-    annotations:
-      external-dns.alpha.kubernetes.io/cloudflare-proxied: 'false'
   additionalDataSources:
     - name: Loki
       type: loki
