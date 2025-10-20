@@ -10,7 +10,7 @@ spec:
   project: infra
   destination:
     name: in-cluster
-    namespace: network
+    namespace: monitoring
   syncPolicy:
     automated:
       allowEmpty: true
