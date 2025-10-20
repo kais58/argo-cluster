@@ -2,7 +2,7 @@
 prometheus:
   enabled: true
 grafana:
-  enabled: false
+  enabled: true
   additionalDataSources:
     - name: Loki
       type: loki
@@ -21,7 +21,7 @@ route:
     hostnames:
       - grafana.kais58.com
     parentRefs:
-      - name: external
+      - name: internal
         namespace: kube-system
         sectionName: https
     rules:
