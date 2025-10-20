@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: external
+  name: external-dns
   namespace: argo-system
   annotations:
     argocd.argoproj.io/sync-wave: '0'
@@ -13,9 +13,9 @@ spec:
       path: kubernetes/apps/network/external-dns
       targetRevision: main
       ref: repo
-    - repoURL: https://kubernetes-sigs.github.io/external-dns
+    - repoURL: https://charts.bitnami.com/bitnami
       chart: external-dns
-      targetRevision: 1.19.0
+      targetRevision: 9.0.4
       helm:
         releaseName: external-dns
         valueFiles:
