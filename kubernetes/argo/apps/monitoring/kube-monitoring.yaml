@@ -4,6 +4,7 @@ kind: Application
 metadata:
   name: kube-prometheus-stack
   namespace: argo-system
+  finalizers: [resources-finalizer.argocd.argoproj.io]
   annotations:
     argocd.argoproj.io/sync-wave: '0'
 spec:
