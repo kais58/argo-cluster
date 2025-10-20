@@ -1,0 +1,30 @@
+---
+prometheus:
+  enabled: true
+grafana:
+  enabled: true
+  additionalDataSources:
+    - name: Loki
+      type: loki
+      access: proxy
+      url: http://loki-gateway
+  ingress:
+    enabled: false
+    hosts:
+      - grafana.{{ environment }}.kais58.com
+
+alertmanager:
+  enabled: true
+
+route:
+  app:
+    hostnames:
+      - grafana.kais58.com
+    parentRefs:
+      - name: external
+        namespace: kube-system
+        sectionName: https
+    rules:
+      - backendRefs:
+          - identifier: grafana
+            port: 8080
