@@ -17,8 +17,7 @@ policy: sync
 sources:
   - crd
   - gateway-httproute
-  - HTTPRoute
-  - Service
+  - service
 txtPrefix: k8s.
 txtOwnerId: default
 domainFilters:
