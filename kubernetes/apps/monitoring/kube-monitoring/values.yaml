@@ -1,6 +1,14 @@
 ---
 prometheus:
   enabled: true
+  prometheusSpec:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: nfs-csi
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
 grafana:
   enabled: true
   additionalDataSources:
