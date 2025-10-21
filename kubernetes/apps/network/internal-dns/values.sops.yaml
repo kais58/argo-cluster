@@ -19,6 +19,8 @@ txtPrefix: k8s.
 txtOwnerId: default
 domainFilters:
   - kais58.com
+excludeDomains:
+  - external.kais58.com
 serviceMonitor:
   enabled: true
 podAnnotations:
