@@ -8,6 +8,6 @@ alloy:
       }
       loki.write "default" {
         endpoint {
-          url = "http://loki-gateway"
+          url = "http://loki-gateway/loki/api/v1/push"
         }
       }
