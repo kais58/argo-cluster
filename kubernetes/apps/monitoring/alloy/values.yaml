@@ -6,7 +6,7 @@ alloy:
         level = "info"
         format = "logfmt"
       }
-      loki.write "<LABEL>" {
+      loki.write "default" {
         endpoint {
           url = "http://loki-gateway"
         }
