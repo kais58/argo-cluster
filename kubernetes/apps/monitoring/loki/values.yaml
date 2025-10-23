@@ -1,7 +1,7 @@
 ---
 global:
   dnsNamespace: "kube-system"
-  dnsService: "coredns"
+  dnsService: "kube-dns"
 loki:
   schemaConfig:
     configs:
