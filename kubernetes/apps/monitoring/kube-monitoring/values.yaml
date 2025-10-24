@@ -10,6 +10,12 @@ prometheus:
           resources:
             requests:
               storage: 50Gi
+
+  prometheusOperator:
+    kubeletService:
+      name: kubelet
+      enabled: false
+
 grafana:
   enabled: true
   additionalDataSources:
